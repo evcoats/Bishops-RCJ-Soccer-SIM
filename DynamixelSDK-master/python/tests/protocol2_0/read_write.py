@@ -30,7 +30,7 @@
 #
 
 import os
-
+"""
 if os.name == 'nt':
     import msvcrt
     def getch():
@@ -46,7 +46,7 @@ else:
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
-
+"""
 from dynamixel_sdk import *                    # Uses Dynamixel SDK library
 
 # Control table address
@@ -60,7 +60,7 @@ PROTOCOL_VERSION            = 2.0               # See which protocol version is 
 # Default setting
 DXL_ID                      = 1                 # Dynamixel ID : 1
 BAUDRATE                    = 57600             # Dynamixel default baudrate : 57600
-DEVICENAME                  = '/dev/ttyUSB0'    # Check which port is being used on your controller
+DEVICENAME                  = '/dev/tty.usbserial-FT4THVLF'    # Check which port is being used on your controller
                                                 # ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
 
 TORQUE_ENABLE               = 1                 # Value for enabling the torque
@@ -89,7 +89,7 @@ if portHandler.openPort():
 else:
     print("Failed to open the port")
     print("Press any key to terminate...")
-    getch()
+    #getch()
     quit()
 
 
@@ -99,7 +99,7 @@ if portHandler.setBaudRate(BAUDRATE):
 else:
     print("Failed to change the baudrate")
     print("Press any key to terminate...")
-    getch()
+    #getch()
     quit()
 
 # Enable Dynamixel Torque
@@ -113,8 +113,8 @@ else:
 
 while 1:
     print("Press any key to continue! (or press ESC to quit!)")
-    if getch() == chr(0x1b):
-        break
+    # if getch() == chr(0x1b):
+    #     break
 
     # Write goal position
     dxl_comm_result, dxl_error = packetHandler.write4ByteTxRx(portHandler, DXL_ID, ADDR_PRO_GOAL_POSITION, dxl_goal_position[index])
